@@ -26,35 +26,7 @@ export default async function handler(req, res) {
     }
 
     // Validar la suscripción del usuario
-    try {
-      const { data: usuario, error: errorUsuario } = await supabase
-        .from('usuarios')
-        .select('suscripcion_valida_hasta')
-        .eq('email', email)
-        .single();
-
-      if (errorUsuario || !usuario) {
-        console.error('Error al verificar la suscripción:', errorUsuario);
-        return res.status(500).json({ error: 'Error al verificar la suscripción.' });
-      }
-
-      const hoy = new Date().toISOString().split('T')[0];
-      if (!usuario.suscripcion_valida_hasta || usuario.suscripcion_valida_hasta < hoy) {
-        return res.status(403).json({
-          error: 'Tu suscripción ha vencido. Por favor, renovala para continuar.',
-        });
-      }
-    } catch (error) {
-      console.error('Error al verificar la suscripción:', error);
-      return res.status(500).json({ error: 'Error interno al verificar la suscripción.' });
-    }
-
-    // Filtrar números válidos
-    const numerosValidos = numeros.filter(num => num !== '' && num !== '+549');
-
-    if (numerosValidos.length === 0) {
-      return res.status(400).json({ error: 'No se encontraron números válidos.' });
-    }
+    
 
     try {
       // Verificar si el usuario ya tiene un link

@@ -16,23 +16,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { data: usuario, error: errorUsuario } = await supabase
-      .from('usuarios')
-      .select('suscripcion_valida_hasta')
-      .eq('email', email)
-      .single();
-
-    if (errorUsuario || !usuario) {
-      return res.status(404).json({ error: 'Usuario no encontrado o sin suscripción.' });
-    }
-
-    const hoy = new Date().toISOString().split('T')[0];
-    if (
-      usuario.suscripcion_valida_hasta && 
-      new Date(usuario.suscripcion_valida_hasta) < hoy
-    ) {
-      return res.status(403).json({ error: 'La suscripción ha expirado. Por favor, renueva tu plan.' });
-    }
+    
 
 
     const { data: link, error } = await supabase

@@ -622,16 +622,7 @@
       // Recuperar los datos del link desde Supabase
       const linkResponse = await fetch(`/api/link?email=${email}`);
 
-      if (linkResponse.status === 403) {
-        // Ocultar todo lo relacionado al link
-        document.getElementById('detalles-link').style.display = 'none';
-        document.getElementById('editar-link-container').style.display = 'none';
-        document.getElementById('output').style.display = 'none';
-
-        // Mostrar un aviso
-        showNotification('Tu suscripción ha vencido. Renueva tu plan para ver el link.', 'error');
-      }
-
+      
       
 
       if (linkResponse.ok) {
@@ -702,129 +693,7 @@
 
   // Generar dinámicamente las cajas de planes PRO
 // Función para generar dinámicamente las cajas de planes PRO
-function generarPlanesPro() {
-  const plansContainer = document.querySelector('.plans-container');
-  plansContainer.innerHTML = ''; // Limpiar contenido previo
 
-  for (let i = 1; i <= 20; i++) {
-    const precio = i * 3; // $3 USD por cada número
-    const planId = `plan_${i}_numeros`;
-
-    const planCard = document.createElement('div');
-    planCard.classList.add('plan-card');
-
-    planCard.innerHTML = `
-      <div class="plan-name">Plan PRO</div>
-      <div class="plan-price">
-        <span class="price-amount">$${precio} USD</span>
-        <span class="price-period">POR ${i} NÚMEROS / MES</span>
-      </div>
-      <div class="plan-features">
-        <ul>
-          <li>Acceso a links multiagente</li>
-          <li>Soporte técnico por WhatsApp</li>
-          <li>Estadísticas de uso</li>
-          <li>Panel de administración</li>
-          <li>Distribución equitativa de mensajes</li>
-          <li>Personalización de links</li>
-        </ul>
-      </div>
-      <div class="plan-actions">
-        <!-- Botón de WhatsApp -->
-        <a href="https://wa.me/+5491123456789?text=Hola%2C%20quiero%20contratar%20el%20plan%20de%20${i}%20números" class="whatsapp-button" target="_blank">
-          <img src="https://thumbs.dreamstime.com/b/logotipo-de-icono-whatsapp-verde-medios-sociales-puedes-usar-donde-quieras-234325955.jpg" alt="WhatsApp Logo" class="button-icon">
-          Contratar por WhatsApp
-        </a>
-
-        <!-- Botón de Mercado Pago -->
-        <button class="mercadopago-button" data-plan="${planId}">
-          <img src="https://pbs.twimg.com/profile_images/1701275944873328640/xIaRABr1_400x400.jpg" alt="Mercado Pago Logo" class="button-icon">
-          Pagar con Mercado Pago
-        </button>
-
-        
-
-      </div>
-    `;
-
-    plansContainer.appendChild(planCard);
-  }
-
-  // Agrega event listeners a los botones de Mercado Pago
-  document.querySelectorAll('.mercadopago-button').forEach(button => {
-    button.addEventListener('click', async function(e) {
-      e.preventDefault();
-      const plan = this.getAttribute('data-plan');
-      const email = localStorage.getItem('usuarioEmail');
-      
-      try {
-        // Mostrar estado de carga
-        this.innerHTML = '<span class="loading"></span> Procesando...';
-        this.disabled = true;
-
-        const res = await fetch('/api/generar-link', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan, email })
-        });
-
-        const data = await res.json();
-
-        if (data.init_point) {
-          window.location.href = data.init_point; // Redirige a Mercado Pago
-        } else {
-          showNotification('Error generando el link de pago', 'error');
-          console.error('Error en la respuesta:', data);
-        }
-      } catch (error) {
-        console.error('Error en el pago:', error);
-        showNotification('Hubo un problema al generar el link de pago.', 'error');
-      } finally {
-        // Restaurar el botón
-        this.innerHTML = `
-          <img src="https://pbs.twimg.com/profile_images/1701275944873328640/xIaRABr1_400x400.jpg" alt="Mercado Pago Logo" class="button-icon">
-          Pagar con Mercado Pago
-        `;
-        this.disabled = false;
-      }
-    });
-  });
-  // 👉 Botones Débito Automático (Suscripción)
-document.querySelectorAll(".debito-button").forEach(button => {
-  button.addEventListener("click", async function(e) {
-    e.preventDefault();
-    const plan = this.getAttribute("data-plan");
-    const email = localStorage.getItem("usuarioEmail");
-
-    try {
-      this.innerHTML = '<span class="loading"></span> Procesando...';
-      this.disabled = true;
-
-      const resp = await fetch("/api/generar-link2", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, plan })
-      });
-
-      const data = await resp.json();
-      if (data.init_point) {
-        window.location.href = data.init_point; // redirige a la suscripción
-      } else {
-        showNotification("Error generando el link de débito automático", "error");
-      }
-    } catch (error) {
-      console.error("Error en débito automático:", error);
-      showNotification("Hubo un problema con el débito automático", "error");
-    } finally {
-      this.innerHTML = `
-        <img src="https://cdn-icons-png.flaticon.com/512/633/633611.png" alt="Tarjeta" class="button-icon">
-        Débito Automático
-      `;
-      this.disabled = false;
-    }
-  });
-});
-}
 
 // Llamar a la función para generar los planes al cargar la página
 document.addEventListener('DOMContentLoaded', generarPlanesPro);
@@ -887,7 +756,7 @@ document.getElementById('registro-form').addEventListener('submit', async functi
     const input = document.getElementById(inputId);
     if (input.type === "password") {
       input.type = "text";
-      iconElement.textContent = "🙈"; // icono cuando se muestra
+      iconElement.textContent = "👁"; // icono cuando se muestra
     } else {
       input.type = "password";
       iconElement.textContent = "👁"; // icono cuando está oculto
