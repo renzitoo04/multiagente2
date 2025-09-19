@@ -21,45 +21,7 @@
   </header>
 
   <!-- Modal de Planes -->
-  <div class="modal-overlay" id="plans-modal" style="display: none;">
-    <div class="modal-container">
-      <button class="modal-close" onclick="closePlansModal()">×</button>
-      <div class="modal-header">
-        <h2>Planes de Suscripción</h2>
-        <p>Paga solo por lo que necesitas. Nuestro modelo de precios simple te permite escalar tu negocio sin complicaciones.</p>
-      </div>
-      <div class="plans-container">
-        <div class="plan-card">
-          <div class="plan-name">Plan Multiagente</div>
-          <div class="plan-price">
-            <span class="price-amount">$3 USD</span>
-            <span class="price-period">POR CADA NÚMERO / MES</span>
-          </div>
-          <div class="plan-features">
-            <ul>
-              <li>Acceso a links multiagente</li>
-              <li>Soporte técnico por WhatsApp</li>
-              <li>Estadísticas de uso</li>
-              <li>Panel de administración</li>
-              <li>Distribución equitativa de mensajes</li>
-              <li>Personalización de links</li>
-            </ul>
-          </div>
-          <div class="plan-actions">
-            <!-- Botón de WhatsApp con el logo correcto -->
-            <a href="https://wa.me/+5491165388118?text=Hola%2C%20quiero%20información%20sobre%20los%20planes%20de%20Linkify" class="whatsapp-button" target="_blank">
-              <img src="https://thumbs.dreamstime.com/b/logotipo-de-icono-whatsapp-verde-medios-sociales-puedes-usar-donde-quieras-234325955.jpg" alt="WhatsApp Logo" class="button-icon">
-              Contratar por WhatsApp
-            </a>
-
-         
-            
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 
   <div class="container">
     <!-- Login container with improved styling -->
@@ -86,7 +48,7 @@
       <!-- Botón de iniciar sesión -->
       <button onclick="login()" aria-label="Iniciar sesión">Iniciar sesión</button>
       <p id="login-error"></p>
-      <p>¿No tienes una cuenta? <a href="#" id="crear-cuenta-link">Crear cuenta</a></p>
+      
     </div>
 
     <!-- Info container moved to appear only in login screen -->
@@ -203,24 +165,7 @@
     <!-- Keep only the info container inside the login-info div -->
 
     <!-- Registro container -->
-    <div id="registro-container" style="display:none;">
-      <h2>Crear cuenta</h2>
-      <form id="registro-form">
-        <label for="registro-email">Email:</label>
-        <input type="email" id="registro-email" placeholder="Ingresa tu email" required>
-        
-        <label for="registro-password">Contraseña:</label>
-        <div class="password-container">
-          <input type="password" id="registro-password" placeholder="Ingresa tu contraseña" required>
-          <span class="toggle-password" onclick="togglePassword('registro-password', this)">👁</span>
-        </div>
-        
-
-        
-        <button type="submit" class="btn btn-primary">Registrarse</button>
-        <p><a href="#" id="volver-login" class="volver-inicio-button">↩ Volver al inicio</a></p>
-      </form>
-    </div>
+    
   </div>
 
   <!-- Footer with updated copyright year -->
