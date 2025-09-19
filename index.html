@@ -9,7 +9,7 @@
 <body>
   
 
-  <!-- Modal de Planes -->
+  
  
 
   <div class="container">
@@ -74,15 +74,15 @@
 
       <h1>Generador de Links Multiagente</h1>
       
-      <!-- Quick stats for dashboard feel -->
       
       
-      <!-- Two-column desktop layout -->
+      
+      
       <div class="dashboard-layout">
         <div class="main-column">
           <form id="form" class="card">
             <h3>Números de WhatsApp</h3>
-            <!-- Grid layout for number inputs -->
+           
             <div id="numeros-container" class="numbers-grid">
               <div class="numero-container" id="numero-container-1">
                 <span class="bandera-container">
@@ -104,13 +104,13 @@
             <button type="button" onclick="generarLink()" aria-label="Generar Link">Generar Link</button>
           </form>
 
-          <!-- Enhanced output with copy button -->
+         
           <div class="output-container">
             <div class="output card" id="output"></div>
             <button class="copy-btn" id="copy-link-btn" onclick="copyToClipboard()" style="display: none;" aria-label="Copiar al portapapeles"></button>
           </div>
           
-          <!-- Details card with consistent styling -->
+          
           <div class="detalles-link card" id="detalles-link" style="display: none;">
             <h3>Detalles del Link Generado</h3>
             <p><strong>Números:</strong> <span id="numeros-generados"></span></p>
@@ -118,7 +118,7 @@
           </div>
         </div>
         
-        <!-- Side column for editing -->
+        
         <div class="side-column">
           <!-- Edit link container -->
           <div id="editar-link-container" style="display: none;">
@@ -128,7 +128,7 @@
             <button onclick="actualizarLink()">Actualizar Link</button>
           </div>
           
-          <!-- Shortened link stats could go here -->
+          
           <div id="link-stats-container" class="card" style="display: none;">
             <h3>Estadísticas de Links</h3>
             <div id="link-stats-content">
@@ -150,23 +150,20 @@
       <div id="acortar-link-output" class="output"></div>
     </div>
 
-    <!-- Remove this info container that appears after login -->
-    <!-- Keep only the info container inside the login-info div -->
-
-    <!-- Registro container -->
+    
     
   </div>
 
   
 
-  <!-- Notification element with improved styling -->
+  
   <div class="notification" id="notification"></div>
 
   <script>
   let contadorNumeros = 1;
-  let limiteNumeros = 5; // Default value, will be updated on login
+  let limiteNumeros = 5; 
 
-  // Function to add a new phone number field
+  
   function agregarNumero() {
     if (contadorNumeros >= limiteNumeros) {
       showNotification(`Solo puedes agregar hasta ${limiteNumeros} números.`, 'error');
@@ -192,7 +189,7 @@
     }
   }
 
-  // Function to remove the last phone number field
+  
   function quitarUltimoNumero() {
     if (contadorNumeros > 1) {
       const container = document.getElementById('numeros-container');
@@ -211,7 +208,7 @@
     }
   }
 
-  // Function to handle login
+  
   async function login() {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
@@ -315,7 +312,7 @@
     }
   }
 
-  // Function to handle logout
+  
   function cerrarSesion() {
     const email = localStorage.getItem('usuarioEmail');
 
@@ -339,11 +336,11 @@
     showNotification('Sesión cerrada correctamente. Por favor, inicia sesión nuevamente.');
   }
 
-  // Function to reset form state
+  
   function resetFormState() {
     contadorNumeros = 1;
     
-    // Reset the numbers container
+    
     document.getElementById('numeros-container').innerHTML = `
       <div class="numero-container" id="numero-container-1">
         <span class="bandera-container">
@@ -353,19 +350,19 @@
       </div>
     `;
     
-    // Clear message input
+    
     document.getElementById('mensaje').value = '';
     
-    // Clear output and details
+    
     document.getElementById('output').innerHTML = '';
     document.getElementById('detalles-link').style.display = 'none';
     
-    // Enable add number button
+    
     const addButton = document.querySelector('button[onclick="agregarNumero()"]');
     if (addButton) addButton.disabled = false;
   }
 
-  // Function to show notification - improved
+  
   function showNotification(message, type = 'success') {
     const notification = document.getElementById('notification');
     notification.textContent = message;
@@ -378,18 +375,18 @@
     
     notification.classList.add('show');
     
-    // Clear any existing timeout to prevent multiple timeouts
+    
     if (notification.timeoutId) {
       clearTimeout(notification.timeoutId);
     }
     
-    // Set new timeout
+    
     notification.timeoutId = setTimeout(() => {
       notification.classList.remove('show');
     }, 3000);
   }
 
-  // Function to generate a new link
+  
   async function generarLink() {
   const numeros = Array.from(document.querySelectorAll('.numero'))
     .map(input => input.value.trim())
@@ -541,7 +538,7 @@
   }
 }
 
-  // Function to display existing link details
+  
   async function mostrarDetallesLink(linkData) {
     const { link, numeros, mensaje } = linkData;
 
@@ -556,7 +553,7 @@
     `;
   }
 
-  // Function to manually shorten a link
+  
   async function acortarLinkManual() {
     const linkOriginal = document.getElementById('link-original').value.trim();
     const acortarButton = document.querySelector('button[onclick="acortarLinkManual()"]');
@@ -566,26 +563,26 @@
       return;
     }
 
-    // Show loading state
+    
     acortarButton.innerHTML = '<span class="loading"></span> Acortando...';
     acortarButton.disabled = true;
 
     try {
-      // For demonstration purposes, we'll simulate a successful API response
+      
       setTimeout(() => {
         const shortLink = `https://linkify.to/${Math.random().toString(36).substring(2, 8)}`;
         
-        // Update UI with shortened link
+        
         document.getElementById('acortar-link-output').innerHTML = `
           <p>Link acortado con éxito:</p>
           <a href="${shortLink}" target="_blank">${shortLink}</a>
         `;
         document.getElementById('acortar-link-output').style.display = 'block';
         
-        // Show success notification
+        
         showNotification('Link acortado correctamente');
         
-        // Reset button state
+        
         acortarButton.innerHTML = 'Acortar Link';
         acortarButton.disabled = false;
       }, 1500);
@@ -597,7 +594,7 @@
     }
   }
 
-  // Check login status on page load
+  
   document.addEventListener('DOMContentLoaded', async () => {
   const email = localStorage.getItem('usuarioEmail');
 
@@ -681,8 +678,7 @@
     }
   };
 
-  // Generar dinámicamente las cajas de planes PRO
-// Función para generar dinámicamente las cajas de planes PRO
+  
 
 
 // Llamar a la función para generar los planes al cargar la página
